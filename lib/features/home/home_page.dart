@@ -103,25 +103,6 @@ class _HomePageState extends State<HomePage> {
                           style: theme.textTheme.bodyLarge,
                         ),
                       ),
-                      const SizedBox(height: 24),
-                      Wrap(
-                        spacing: 10,
-                        runSpacing: 10,
-                        children: const [
-                          _InfoChip(
-                            icon: Icons.help_outline_rounded,
-                            label: '10 pertanyaan',
-                          ),
-                          _InfoChip(
-                            icon: Icons.schedule_rounded,
-                            label: '±5 menit',
-                          ),
-                          _InfoChip(
-                            icon: Icons.auto_stories_rounded,
-                            label: 'Pembahasan lengkap',
-                          ),
-                        ],
-                      ),
                       const SizedBox(height: 32),
                       Form(
                         key: form,
@@ -159,11 +140,6 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ],
                         ),
-                      ),
-                      const SizedBox(height: 14),
-                      Text(
-                        'Bank 50 soal. Nama yang sama mendapat soal baru hingga satu siklus selesai.',
-                        style: theme.textTheme.bodyMedium,
                       ),
                     ],
                   );
@@ -227,40 +203,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _InfoChip extends StatelessWidget {
-  const _InfoChip({required this.icon, required this.label});
-  final IconData icon;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 9),
-      decoration: BoxDecoration(
-        color: theme.cardColor,
-        border: Border.all(color: theme.dividerColor),
-        borderRadius: BorderRadius.circular(100),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 18, color: AppTheme.coral),
-          const SizedBox(width: 7),
-          Flexible(
-            child: Text(
-              label,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
