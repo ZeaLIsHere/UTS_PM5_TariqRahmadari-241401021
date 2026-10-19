@@ -22,9 +22,14 @@ class _YokaiAppState extends State<YokaiApp> {
     darkTheme: AppTheme.dark,
     themeMode: mode,
     home: HomePage(
-      onToggleTheme: () => setState(
-        () => mode = mode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark,
-      ),
+      onToggleTheme: () => setState(() {
+        final currentDark =
+            mode == ThemeMode.dark ||
+            (mode == ThemeMode.system &&
+                WidgetsBinding.instance.platformDispatcher.platformBrightness ==
+                    Brightness.dark);
+        mode = currentDark ? ThemeMode.light : ThemeMode.dark;
+      }),
     ),
   );
 }
