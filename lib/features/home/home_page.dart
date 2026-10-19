@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                       Text(
                         'Mitos Jepang, seberapa kenal kamu?',
                         style: theme.textTheme.displayLarge?.copyWith(
-                          fontSize: wide ? 60 : (width < 380 ? 38 : 45),
+                          fontSize: wide ? 54 : (width < 380 ? 38 : 45),
                           letterSpacing: -1.5,
                         ),
                       ),
@@ -149,18 +149,23 @@ class _HomePageState extends State<HomePage> {
                         trailing: IconButton(
                           tooltip: 'Ganti tema',
                           onPressed: widget.onToggleTheme,
-                          icon: SvgPicture.asset(
-                            'assets/svg/icon_moon.svg',
-                            width: 28,
-                            height: 28,
-                            excludeFromSemantics: true,
-                          ),
+                          icon: theme.brightness == Brightness.dark
+                              ? const Icon(
+                                  Icons.light_mode_rounded,
+                                  color: AppTheme.coral,
+                                )
+                              : SvgPicture.asset(
+                                  'assets/svg/icon_moon.svg',
+                                  width: 28,
+                                  height: 28,
+                                  excludeFromSemantics: true,
+                                ),
                         ),
                       ),
-                      SizedBox(height: wide ? 72 : 32),
+                      SizedBox(height: wide ? 48 : 32),
                       if (wide)
                         Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Expanded(flex: 11, child: copy),
                             const SizedBox(width: 46),

@@ -20,6 +20,7 @@
 - Jawaban tersimpan saat berpindah soal dan saat layar berubah ukuran.
 - Halaman hasil dengan pembahasan setiap soal.
 - Tema terang dan gelap, tampilan adaptif untuk ponsel, tablet, dan web.
+- Ilustrasi dan ikon SVG bertema mitos Jepang pada beranda, kuis, hasil, serta ikon web.
 - Font Manrope lokal dan ikon Material.
 
 ## Menjalankan

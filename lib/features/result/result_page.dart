@@ -61,8 +61,10 @@ class ResultPage extends StatelessWidget {
                           style: theme.textTheme.bodyLarge,
                         ),
                         const SizedBox(height: 24),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                        Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.end,
+                          spacing: 12,
+                          runSpacing: 2,
                           children: [
                             Text(
                               '$score / ${questions.length}',
@@ -70,14 +72,11 @@ class ResultPage extends StatelessWidget {
                                 color: AppTheme.coral,
                               ),
                             ),
-                            const SizedBox(width: 12),
-                            Flexible(
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 6),
-                                child: Text(
-                                  '$percentage% benar',
-                                  style: theme.textTheme.bodyMedium,
-                                ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 6),
+                              child: Text(
+                                '$percentage% benar',
+                                style: theme.textTheme.bodyMedium,
                               ),
                             ),
                           ],

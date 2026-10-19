@@ -17,7 +17,7 @@ class BrandHeader extends StatelessWidget {
           semanticsLabel: 'Maskot kitsune',
         ),
         const SizedBox(width: 10),
-        Flexible(
+        Expanded(
           child: Text(
             'YŌKAI QUEST',
             maxLines: 1,
@@ -25,7 +25,7 @@ class BrandHeader extends StatelessWidget {
             style: theme.textTheme.titleLarge?.copyWith(letterSpacing: .6),
           ),
         ),
-        if (trailing != null) ...[const Spacer(), trailing!],
+        if (trailing != null) ...[const SizedBox(width: 8), trailing!],
       ],
     );
   }
