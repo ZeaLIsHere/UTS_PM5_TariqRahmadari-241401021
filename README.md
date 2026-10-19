@@ -1,8 +1,20 @@
 # Yōkai Quest
 
-Aplikasi kuis pilihan ganda bertema mitos Jepang, dibuat dengan Flutter.
+## Identitas Mahasiswa
 
-## Fitur
+| Keterangan | Data |
+| --- | --- |
+| Nama | Tariq Rahmadari |
+| NIM | 241401021 |
+| Lab | Pemograman Mobile 5 |
+
+## Informasi Aplikasi
+
+**Nama aplikasi:** Yōkai Quest
+
+**Deskripsi singkat:** Aplikasi kuis pilihan ganda bertema mitos Jepang yang dibuat dengan Flutter. Pengguna memasukkan nama, menjawab pertanyaan, lalu melihat skor dan pembahasan jawabannya.
+
+### Fitur-fitur yang tersedia
 
 - Nama pemain, 10 soal lokal, progres dan skor.
 - Jawaban tersimpan saat berpindah soal dan saat layar berubah ukuran.
