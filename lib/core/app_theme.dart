@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static const coral = Color(0xFFE56C63);
-  static ThemeData get light =>
-      _make(Brightness.light, const Color(0xFFFFFAF4), const Color(0xFF402D45));
+  static const plum = Color(0xFF402D45);
+  static const cream = Color(0xFFFFFAF4);
+  static const blush = Color(0xFFFBE1D8);
+  static const paper = Color(0xFFFFFEFB);
+  static const darkSurface = Color(0xFF29232E);
+  static ThemeData get light => _make(Brightness.light, cream, plum);
   static ThemeData get dark =>
       _make(Brightness.dark, const Color(0xFF18141D), const Color(0xFFF9EEF4));
 
@@ -20,9 +24,13 @@ class AppTheme {
       fontFamily: 'Manrope',
       scaffoldBackgroundColor: background,
       colorScheme: scheme,
+      dividerColor: brightness == Brightness.light
+          ? const Color(0xFFE8DAD8)
+          : const Color(0xFF504653),
+      cardColor: brightness == Brightness.light ? paper : darkSurface,
       textTheme: TextTheme(
         displayLarge: TextStyle(
-          fontSize: 48,
+          fontSize: 52,
           height: 1.08,
           fontWeight: FontWeight.w800,
           color: ink,
@@ -41,6 +49,8 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
+        fillColor: brightness == Brightness.light ? paper : darkSurface,
+        hintStyle: TextStyle(color: ink.withValues(alpha: .55)),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(18),
           borderSide: BorderSide.none,

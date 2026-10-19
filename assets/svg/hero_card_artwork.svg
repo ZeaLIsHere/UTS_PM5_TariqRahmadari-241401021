@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="690" height="448" viewBox="0 0 690 448"><g stroke-linecap="round" stroke-linejoin="round"><rect width="690" height="448" rx="60" fill="#FBE1D8"/>
+<circle cx="345" cy="213" r="157" fill="#F8CFC7"/>
+<circle cx="437" cy="118" r="35" fill="#FFFAF4" opacity=".65"/>
+<g transform="translate(111 29) scale(1.3)"><g>
+<path d="M95 251H265L280 270H80Z" fill="#CF5C5A"/>
+<path d="M117 230H243V254H117Z" fill="#E56C63"/>
+<path d="M140 147H220V250H140Z" fill="#E56C63"/>
+<path d="M163 250V213a17 17 0 0 1 34 0v37" fill="#F8CFC7"/>
+<path d="M115 160H245V181H115Z" fill="#E56C63"/>
+<path d="M96 145Q102 166 122 166H238Q258 166 264 145" fill="none" stroke="#E56C63" stroke-width="17"/>
+<path d="M119 126H241L255 146H105Z" fill="#E56C63"/>
+<path d="M132 124L174 69Q180 61 186 69L228 124Z" fill="#E56C63"/>
+<path d="M169 91L180 77 191 91Z" fill="#CF5C5A"/>
+<path d="M103 182H119V246H103Z M241 182H257V246H241Z" fill="#CF5C5A"/>
+<path d="M89 166Q92 183 108 185 M271 166Q268 183 252 185" fill="none" stroke="#E56C63" stroke-width="12"/>
+<path d="M123 202H140 M220 202H237" stroke="#CF5C5A" stroke-width="7"/>
+</g></g>
+<g transform="translate(68 226) scale(.43)"><g>
+<path d="M83 195C46 159 44 112 73 100Q66 140 111 153" fill="#FFFAF4" stroke="#E56C63" stroke-width="10"/>
+<path d="M76 197Q65 160 90 124L100 62 143 91 187 82 225 45 224 121Q249 155 225 208Q197 259 151 254Q97 253 76 197Z" fill="#FFFAF4" stroke="#E56C63" stroke-width="11"/>
+<path d="M103 91L111 124 135 104Z M189 102L215 68 212 123Z" fill="#F8CFC7"/>
+<path d="M96 165Q119 148 138 167 M172 167Q194 148 215 164" fill="none" stroke="#402D45" stroke-width="9"/>
+<path d="M145 189l13 10 13-10Z" fill="#E56C63"/>
+<path d="M136 211q22 18 43 0" stroke="#E56C63" stroke-width="6" fill="none"/>
+<circle cx="76" cy="177" r="13" fill="#F8CFC7"/><circle cx="220" cy="178" r="13" fill="#F8CFC7"/>
+</g></g>
+<path d="M118 360q-32-4-47-27 M566 355q30-12 46-38" stroke="#F6BDB4" stroke-width="10" fill="none"/>
+<path d="M614 62.660000000000004 Q617.39 79.61 634.34 83 Q617.39 86.39 614 103.34 Q610.61 86.39 593.66 83 Q610.61 79.61 614 62.660000000000004Z" fill="#E56C63"/><path d="M638 116.1 Q639.65 124.35 647.9 126 Q639.65 127.65 638 135.9 Q636.35 127.65 628.1 126 Q636.35 124.35 638 116.1Z" fill="#E56C63"/><path d="M93 100.48 Q94.92 110.08 104.52 112 Q94.92 113.92 93 123.52 Q91.08 113.92 81.48 112 Q91.08 110.08 93 100.48Z" fill="#E56C63"/>
+<circle cx="76" cy="157" r="4" fill="#E56C63"/></g></svg>
