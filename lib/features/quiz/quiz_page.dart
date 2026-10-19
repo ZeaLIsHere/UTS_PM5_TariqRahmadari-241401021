@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../core/app_theme.dart';
 import '../../core/app_layout.dart';
 import '../../widgets/answer_tile.dart';
+import '../../widgets/animated_progress.dart';
 import '../../widgets/brand_header.dart';
 import '../../widgets/primary_button.dart';
 import 'quiz_session.dart';
@@ -48,7 +49,7 @@ class QuizPage extends StatelessWidget {
                               Text(
                                 'PERTANYAAN ${session.index + 1}',
                                 style: theme.textTheme.labelLarge?.copyWith(
-                                  color: AppTheme.coral,
+                                  color: theme.colorScheme.primary,
                                   fontWeight: FontWeight.w800,
                                   letterSpacing: 1.4,
                                 ),
@@ -56,7 +57,7 @@ class QuizPage extends StatelessWidget {
                               Text(
                                 '${session.index + 1} / ${session.questions.length}',
                                 style: theme.textTheme.titleLarge?.copyWith(
-                                  color: AppTheme.coral,
+                                  color: theme.colorScheme.primary,
                                 ),
                               ),
                             ],
@@ -201,12 +202,9 @@ class _QuizProgress extends StatelessWidget {
             style: theme.textTheme.bodyMedium,
           ),
           const SizedBox(height: 18),
-          LinearProgressIndicator(
+          AnimatedProgress(
             value: session.answered / session.questions.length,
-            minHeight: 8,
-            borderRadius: BorderRadius.circular(10),
-            color: AppTheme.coral,
-            backgroundColor: theme.colorScheme.surface,
+            label: 'Progres jawaban',
           ),
           const SizedBox(height: 18),
           Wrap(

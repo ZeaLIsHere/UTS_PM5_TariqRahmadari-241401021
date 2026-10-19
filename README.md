@@ -24,6 +24,8 @@ Aplikasi kuis pilihan ganda bertema mitos Jepang yang dibuat dengan Flutter. Pem
 - Progres dan pilihan jawaban tetap ada ketika berpindah soal, halaman, atau ukuran layar berubah selama sesi berlangsung.
 - Halaman hasil menampilkan skor, jawaban pemain, jawaban benar, dan pembahasan.
 - Tema terang dan gelap; tata letak responsif untuk ponsel, tablet, dan web.
+- Batas lebar konten adaptif, dukungan teks diperbesar, serta tombol nomor soal untuk meninjau jawaban. Hasil hanya dibuka setelah semua soal dijawab.
+- Animasi pilihan jawaban, progres, dan lencana hasil yang mengikuti pengaturan kurangi animasi perangkat.
 - Ilustrasi serta ikon SVG bertema Jepang, font Manrope lokal, dan widget UI yang dapat digunakan ulang.
 
 Soal dan riwayat tidak memerlukan API maupun database. Riwayat hanya tersimpan pada perangkat atau browser tempat kuis dimainkan; menghapus data aplikasi atau browser akan menghapus riwayat tersebut.

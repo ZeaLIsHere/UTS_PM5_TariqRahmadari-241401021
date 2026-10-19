@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../core/app_theme.dart';
 import '../../core/app_layout.dart';
@@ -7,6 +6,8 @@ import '../../features/quiz/question.dart';
 import '../../features/quiz/quiz_session.dart';
 import '../../widgets/brand_header.dart';
 import '../../widgets/primary_button.dart';
+import '../../widgets/result_badge.dart';
+import '../../widgets/animated_progress.dart';
 
 class ResultPage extends StatelessWidget {
   const ResultPage({super.key, required this.session});
@@ -41,13 +42,7 @@ class ResultPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Center(
-                          child: SvgPicture.asset(
-                            'assets/svg/result_seal.svg',
-                            height: wide ? 195 : 150,
-                            semanticsLabel: 'Lencana hasil kuis',
-                          ),
-                        ),
+                        Center(child: ResultBadge(height: wide ? 170 : 120)),
                         const SizedBox(height: 22),
                         Text(
                           'Petualangan selesai, ${session.name}!',
@@ -71,7 +66,7 @@ class ResultPage extends StatelessWidget {
                             Text(
                               '$score / ${session.questions.length}',
                               style: theme.textTheme.displayLarge?.copyWith(
-                                color: AppTheme.coral,
+                                color: theme.colorScheme.primary,
                               ),
                             ),
                             Padding(
@@ -82,6 +77,11 @@ class ResultPage extends StatelessWidget {
                               ),
                             ),
                           ],
+                        ),
+                        const SizedBox(height: 22),
+                        AnimatedProgress(
+                          value: score / session.questions.length,
+                          label: 'Jawaban benar',
                         ),
                         const SizedBox(height: 22),
                         PrimaryButton(
@@ -205,7 +205,7 @@ class _ReviewCard extends StatelessWidget {
               child: Text(
                 'Jawaban benar: ${question.options[question.correctIndex]}',
                 style: theme.textTheme.bodyMedium?.copyWith(
-                  color: AppTheme.coral,
+                  color: theme.colorScheme.primary,
                   fontWeight: FontWeight.w800,
                 ),
               ),

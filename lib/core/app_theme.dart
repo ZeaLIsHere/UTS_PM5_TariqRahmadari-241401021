@@ -15,8 +15,10 @@ class AppTheme {
     final scheme = ColorScheme.fromSeed(
       seedColor: coral,
       brightness: brightness,
-      primary: coral,
-      onPrimary: Colors.white,
+      primary: brightness == Brightness.light ? const Color(0xFFA63D36) : coral,
+      onPrimary: brightness == Brightness.light
+          ? Colors.white
+          : const Color(0xFF25131D),
     );
     return ThemeData(
       useMaterial3: true,
@@ -50,7 +52,11 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: brightness == Brightness.light ? paper : darkSurface,
-        hintStyle: TextStyle(color: ink.withValues(alpha: .55)),
+        hintStyle: TextStyle(color: ink.withValues(alpha: .75)),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(18),
+          borderSide: BorderSide(color: scheme.primary, width: 2),
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(18),
           borderSide: BorderSide.none,
