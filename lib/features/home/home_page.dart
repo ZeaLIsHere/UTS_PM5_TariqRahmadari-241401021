@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../core/app_theme.dart';
 import '../../widgets/primary_button.dart';
+import '../quiz/quiz_page.dart';
+import '../quiz/quiz_session.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.onToggleTheme});
@@ -22,8 +24,33 @@ class _HomePageState extends State<HomePage> {
 
   void start() {
     if (form.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Petualangan segera dimulai!')),
+      final session = QuizSession(name.text.trim());
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (quizContext) => QuizPage(
+            session: session,
+            onFinish: () => showDialog<void>(
+              context: quizContext,
+              builder: (dialogContext) => AlertDialog(
+                title: Text('Hebat, ${session.name}!'),
+                content: Text(
+                  'Skor kamu: ${session.score} dari ${session.answers.length}.',
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(dialogContext);
+                      Navigator.pop(quizContext);
+                      session.dispose();
+                    },
+                    child: const Text('Selesai'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       );
     }
   }
