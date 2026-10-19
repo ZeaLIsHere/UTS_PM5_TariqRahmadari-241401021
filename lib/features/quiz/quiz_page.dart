@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../core/app_theme.dart';
+import '../../core/app_layout.dart';
 import '../../widgets/answer_tile.dart';
 import '../../widgets/brand_header.dart';
 import '../../widgets/primary_button.dart';
@@ -15,8 +16,7 @@ class QuizPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final width = MediaQuery.sizeOf(context).width;
-    final gutter = (width * .055).clamp(20.0, 52.0);
+    final gutter = AppLayout.gutter(context);
     return AnimatedBuilder(
       animation: session,
       builder: (context, _) {
@@ -25,12 +25,14 @@ class QuizPage extends StatelessWidget {
           body: SafeArea(
             child: Center(
               child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 1200),
+                constraints: BoxConstraints(
+                  maxWidth: AppLayout.contentWidth(context),
+                ),
                 child: SingleChildScrollView(
                   padding: EdgeInsets.fromLTRB(gutter, 24, gutter, 40),
                   child: LayoutBuilder(
                     builder: (context, box) {
-                      final wide = box.maxWidth >= 820;
+                      final wide = AppLayout.useColumns(box);
                       final progress = _QuizProgress(
                         session: session,
                         showArt: wide,
@@ -38,7 +40,10 @@ class QuizPage extends StatelessWidget {
                       final questionArea = Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
+                          Wrap(
+                            alignment: WrapAlignment.spaceBetween,
+                            spacing: 16,
+                            runSpacing: 8,
                             children: [
                               Text(
                                 'PERTANYAAN ${session.index + 1}',
@@ -48,7 +53,6 @@ class QuizPage extends StatelessWidget {
                                   letterSpacing: 1.4,
                                 ),
                               ),
-                              const Spacer(),
                               Text(
                                 '${session.index + 1} / ${session.questions.length}',
                                 style: theme.textTheme.titleLarge?.copyWith(
@@ -61,7 +65,7 @@ class QuizPage extends StatelessWidget {
                           Text(
                             current.prompt,
                             style: theme.textTheme.headlineMedium?.copyWith(
-                              fontSize: wide ? 37 : 29,
+                              fontSize: wide ? 34 : 26,
                               height: 1.2,
                             ),
                           ),
@@ -81,14 +85,23 @@ class QuizPage extends StatelessWidget {
                           const SizedBox(height: 18),
                           PrimaryButton(
                             label: session.index == session.questions.length - 1
-                                ? 'Lihat hasil'
+                                ? (session.answered == session.questions.length
+                                      ? 'Lihat hasil'
+                                      : 'Lengkapi jawaban')
                                 : 'Pertanyaan berikutnya',
                             onPressed: session.selected == null
                                 ? null
                                 : () {
                                     if (session.index ==
                                         session.questions.length - 1) {
-                                      onFinish();
+                                      if (session.answered ==
+                                          session.questions.length) {
+                                        onFinish();
+                                      } else {
+                                        session.goTo(
+                                          session.answers.indexOf(null),
+                                        );
+                                      }
                                     } else {
                                       session.goTo(session.index + 1);
                                     }
@@ -201,30 +214,34 @@ class _QuizProgress extends StatelessWidget {
             runSpacing: 7,
             children: [
               for (var i = 0; i < session.questions.length; i++)
-                Container(
-                  width: 30,
-                  height: 30,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: session.answers[i] != null
-                        ? AppTheme.coral
-                        : theme.colorScheme.surface,
-                    border: Border.all(
-                      color: i == session.index
-                          ? AppTheme.plum
-                          : Colors.transparent,
-                      width: 2,
-                    ),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Text(
-                    '${i + 1}',
-                    style: TextStyle(
-                      color: session.answers[i] != null
-                          ? Colors.white
-                          : theme.colorScheme.onSurface,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w800,
+                Semantics(
+                  selected: i == session.index,
+                  label:
+                      'Soal ${i + 1}, ${session.answers[i] == null ? 'belum dijawab' : 'sudah dijawab'}',
+                  child: SizedBox(
+                    width: 48,
+                    height: 48,
+                    child: OutlinedButton(
+                      onPressed: () => session.goTo(i),
+                      style: OutlinedButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        foregroundColor: session.answers[i] != null
+                            ? theme.colorScheme.onPrimary
+                            : theme.colorScheme.onSurface,
+                        backgroundColor: session.answers[i] != null
+                            ? theme.colorScheme.primary
+                            : theme.colorScheme.surface,
+                        side: BorderSide(
+                          color: i == session.index
+                              ? theme.colorScheme.onSurface
+                              : theme.dividerColor,
+                          width: i == session.index ? 2 : 1,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                      ),
+                      child: ExcludeSemantics(child: Text('${i + 1}')),
                     ),
                   ),
                 ),

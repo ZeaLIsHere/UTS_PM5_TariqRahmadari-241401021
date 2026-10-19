@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../core/app_theme.dart';
+import '../../core/app_layout.dart';
 import '../../features/quiz/question.dart';
 import '../../features/quiz/quiz_session.dart';
 import '../../widgets/brand_header.dart';
@@ -14,20 +15,21 @@ class ResultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final width = MediaQuery.sizeOf(context).width;
-    final gutter = (width * .055).clamp(20.0, 52.0);
+    final gutter = AppLayout.gutter(context);
     final score = session.score;
     final percentage = (score / session.questions.length * 100).round();
     return Scaffold(
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 1200),
+            constraints: BoxConstraints(
+              maxWidth: AppLayout.contentWidth(context),
+            ),
             child: SingleChildScrollView(
               padding: EdgeInsets.fromLTRB(gutter, 24, gutter, 48),
               child: LayoutBuilder(
                 builder: (context, box) {
-                  final wide = box.maxWidth >= 820;
+                  final wide = AppLayout.useColumns(box);
                   final summary = Container(
                     padding: const EdgeInsets.all(28),
                     decoration: BoxDecoration(
@@ -56,7 +58,7 @@ class ResultPage extends StatelessWidget {
                           percentage >= 80
                               ? 'Luar biasa! Kamu ahli mitos Jepang.'
                               : percentage >= 50
-                              ? 'Bagus! Terus jelajahi dunia yÅkai.'
+                              ? 'Bagus! Terus jelajahi dunia yōkai.'
                               : 'Setiap legenda punya cerita baru untuk dipelajari.',
                           style: theme.textTheme.bodyLarge,
                         ),
@@ -179,7 +181,7 @@ class _ReviewCard extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  'Soal $number  â€¢  ${correct ? 'Benar' : 'Belum tepat'}',
+                  'Soal $number  •  ${correct ? 'Benar' : 'Belum tepat'}',
                   style: theme.textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w800,
                   ),

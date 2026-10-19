@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../core/app_theme.dart';
+import '../../core/app_layout.dart';
 import '../../widgets/brand_header.dart';
 import '../../widgets/primary_button.dart';
 import '../quiz/quiz_page.dart';
@@ -69,25 +70,29 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final width = MediaQuery.sizeOf(context).width;
-    final gutter = (width * .055).clamp(20.0, 52.0);
+    final gutter = AppLayout.gutter(context);
     return Scaffold(
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 1240),
+            constraints: BoxConstraints(
+              maxWidth: AppLayout.contentWidth(context),
+            ),
             child: SingleChildScrollView(
               padding: EdgeInsets.fromLTRB(gutter, 24, gutter, 36),
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  final wide = constraints.maxWidth >= 800;
+                  final wide = AppLayout.useColumns(constraints);
                   final copy = Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Mitos Jepang, seberapa kenal kamu?',
                         style: theme.textTheme.displayLarge?.copyWith(
-                          fontSize: wide ? 54 : (width < 380 ? 38 : 45),
-                          letterSpacing: -1.5,
+                          fontSize: wide
+                              ? 52
+                              : (width * .095).clamp(32.0, 44.0),
+                          letterSpacing: -1,
                         ),
                       ),
                       const SizedBox(height: 18),
@@ -130,9 +135,12 @@ class _HomePageState extends State<HomePage> {
                             const SizedBox(height: 10),
                             TextFormField(
                               controller: name,
+                              enabled: !isStarting,
+                              autofillHints: const [AutofillHints.nickname],
                               textInputAction: TextInputAction.done,
                               onFieldSubmitted: (_) => start(),
                               decoration: const InputDecoration(
+                                labelText: 'Nama pemain',
                                 hintText: 'Tulis namamu di sini',
                                 prefixIcon: Icon(Icons.person_outline_rounded),
                               ),
@@ -158,12 +166,15 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   );
-                  final artwork = Semantics(
-                    label: 'Ilustrasi kuil Jepang bersama maskot kitsune',
-                    child: SvgPicture.asset(
-                      'assets/svg/hero_card_artwork.svg',
-                      fit: BoxFit.contain,
-                      excludeFromSemantics: true,
+                  final artwork = ConstrainedBox(
+                    constraints: BoxConstraints(maxHeight: wide ? 480 : 280),
+                    child: Semantics(
+                      label: 'Ilustrasi kuil Jepang bersama maskot kitsune',
+                      child: SvgPicture.asset(
+                        'assets/svg/hero_card_artwork.svg',
+                        fit: BoxFit.contain,
+                        excludeFromSemantics: true,
+                      ),
                     ),
                   );
                   return Column(
@@ -240,10 +251,12 @@ class _InfoChip extends StatelessWidget {
         children: [
           Icon(icon, size: 18, color: AppTheme.coral),
           const SizedBox(width: 7),
-          Text(
-            label,
-            style: theme.textTheme.bodyMedium?.copyWith(
-              fontWeight: FontWeight.w700,
+          Flexible(
+            child: Text(
+              label,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
         ],
