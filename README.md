@@ -1,5 +1,7 @@
 # Yōkai Quest
 
+Aplikasi kuis pilihan ganda bertema mitos Jepang yang dibuat dengan Flutter. Pemain memasukkan nama, menjawab 10 soal, lalu melihat skor dan pembahasan setiap jawaban.
+
 ## Identitas Mahasiswa
 
 | Keterangan | Data |
@@ -12,26 +14,36 @@
 
 **Nama aplikasi:** Yōkai Quest
 
-**Deskripsi singkat:** Aplikasi kuis pilihan ganda bertema mitos Jepang yang dibuat dengan Flutter. Pengguna memasukkan nama, menjawab pertanyaan, lalu melihat skor dan pembahasan jawabannya.
+**Tema:** Aplikasi Kuis Pilihan Ganda — Mitos Jepang
 
-### Fitur-fitur yang tersedia
+### Fitur
 
-- Nama pemain, bank 50 soal mitos Jepang, 10 soal acak per sesi, progres dan skor.
-- Riwayat soal tersimpan per nama di perangkat/browser. Lima sesi pertama untuk nama yang sama memakai 50 soal tanpa pengulangan; setelah itu siklus dimulai lagi tanpa mengulang soal dari sesi sebelumnya.
-- Jawaban tersimpan saat berpindah soal dan saat layar berubah ukuran.
-- Halaman hasil dengan pembahasan setiap soal.
-- Tema terang dan gelap, tampilan adaptif untuk ponsel, tablet, dan web.
-- Ilustrasi dan ikon SVG bertema mitos Jepang pada beranda, kuis, hasil, serta ikon web.
-- Font Manrope lokal dan ikon Material.
+- Bank 50 soal mitos Jepang dengan empat pilihan jawaban dan pembahasan.
+- Sepuluh soal acak per sesi. Untuk nama yang sama pada perangkat atau browser yang sama, lima sesi pertama menggunakan seluruh 50 soal tanpa pengulangan. Setelah itu, siklus baru dimulai dan soal dari sesi tepat sebelumnya dihindari.
+- Riwayat soal tersimpan secara lokal per nama menggunakan `shared_preferences`. Kuis tetap dapat dimainkan jika penyimpanan lokal tidak tersedia, tetapi jaminan soal baru antarsesi tidak berlaku dalam keadaan itu.
+- Progres dan pilihan jawaban tetap ada ketika berpindah soal, halaman, atau ukuran layar berubah selama sesi berlangsung.
+- Halaman hasil menampilkan skor, jawaban pemain, jawaban benar, dan pembahasan.
+- Tema terang dan gelap; tata letak responsif untuk ponsel, tablet, dan web.
+- Ilustrasi serta ikon SVG bertema Jepang, font Manrope lokal, dan widget UI yang dapat digunakan ulang.
 
-## Menjalankan
+Soal dan riwayat tidak memerlukan API maupun database. Riwayat hanya tersimpan pada perangkat atau browser tempat kuis dimainkan; menghapus data aplikasi atau browser akan menghapus riwayat tersebut.
+
+## Menjalankan Aplikasi
+
+Pastikan Flutter SDK tersedia, lalu jalankan dari direktori proyek:
 
 ```sh
 flutter pub get
 flutter run
 ```
 
-## Memeriksa
+Untuk menjalankan khusus di browser:
+
+```sh
+flutter run -d chrome
+```
+
+## Memeriksa Proyek
 
 ```sh
 flutter analyze
@@ -39,4 +51,18 @@ flutter test
 flutter build web
 ```
 
-Data soal berada di `lib/features/quiz/question.dart`. Riwayat lokal akan terhapus jika data aplikasi/browser dihapus dan tidak tersinkron antarperangkat. Font Manrope menggunakan lisensi OFL di `assets/fonts/OFL.txt`.
+## Struktur Utama
+
+| Lokasi | Isi |
+| --- | --- |
+| `lib/features/home/` | Halaman nama pemain dan awal kuis |
+| `lib/features/quiz/question.dart` | Bank soal dan jawaban |
+| `lib/features/quiz/question_picker.dart` | Pemilihan soal dan pergantian siklus |
+| `lib/features/quiz/question_history.dart` | Penyimpanan riwayat lokal per nama |
+| `lib/features/quiz/quiz_session_factory.dart` | Pembuatan sesi dari bank soal dan riwayat |
+| `lib/features/quiz/quiz_page.dart` | Halaman pertanyaan dan progres |
+| `lib/features/result/` | Skor dan ulasan jawaban |
+| `lib/widgets/` | Komponen UI yang digunakan ulang |
+| `assets/svg/` | Ilustrasi dan ikon |
+
+Font Manrope menggunakan lisensi OFL yang tersedia di `assets/fonts/OFL.txt`.
