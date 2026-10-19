@@ -46,3 +46,9 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# Local agent tools and plans are not application source.
+.agents/
+.claude/
+.codex/
+skills/

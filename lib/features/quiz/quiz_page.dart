@@ -42,11 +42,14 @@ class QuizPage extends StatelessWidget {
                             icon: const Icon(Icons.arrow_back_rounded),
                           ),
                           const SizedBox(width: 8),
-                          Text(
-                            'YŌKAI QUEST',
-                            style: theme.textTheme.titleLarge,
+                          Expanded(
+                            child: Text(
+                              'YŌKAI QUEST',
+                              style: theme.textTheme.titleLarge,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                          const Spacer(),
                           Text(
                             '${session.index + 1}/${questions.length}',
                             style: theme.textTheme.titleLarge?.copyWith(

@@ -23,4 +23,26 @@ void main() {
         .themeMode;
     expect(after, isNot(before));
   });
+
+  testWidgets('jawaban tetap terpilih setelah ukuran layar berubah', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    await tester.pumpWidget(const YokaiApp());
+    await tester.ensureVisible(find.byType(TextFormField));
+    await tester.enterText(find.byType(TextFormField), 'Tariq');
+    await tester.ensureVisible(find.text('Mulai petualangan'));
+    await tester.tap(find.text('Mulai petualangan'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Yōkai'));
+    await tester.pump();
+    tester.view.physicalSize = const Size(900, 600);
+    await tester.pumpAndSettle();
+    expect(find.byIcon(Icons.check_circle_rounded), findsOneWidget);
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+  });
 }
