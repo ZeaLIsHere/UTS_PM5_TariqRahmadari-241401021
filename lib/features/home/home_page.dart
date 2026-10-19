@@ -6,11 +6,13 @@ import '../../widgets/brand_header.dart';
 import '../../widgets/primary_button.dart';
 import '../quiz/quiz_page.dart';
 import '../quiz/quiz_session.dart';
+import '../quiz/quiz_session_factory.dart';
 import '../result/result_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.onToggleTheme});
+  const HomePage({super.key, required this.onToggleTheme, this.sessionFactory});
   final VoidCallback onToggleTheme;
+  final QuizSessionFactory? sessionFactory;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -19,6 +21,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final name = TextEditingController();
   final form = GlobalKey<FormState>();
+  bool isStarting = false;
 
   @override
   void dispose() {
@@ -26,9 +29,30 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  void start() {
+  Future<void> start() async {
+    if (isStarting) return;
     if (!form.currentState!.validate()) return;
-    final session = QuizSession(name.text.trim());
+    setState(() => isStarting = true);
+    late final QuizSession session;
+    try {
+      session = await (widget.sessionFactory ?? QuizSessionFactory()).create(
+        name.text.trim(),
+      );
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Riwayat soal gagal disimpan. Coba lagi.'),
+        ),
+      );
+      setState(() => isStarting = false);
+      return;
+    }
+    if (!mounted) {
+      session.dispose();
+      return;
+    }
+    setState(() => isStarting = false);
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -121,15 +145,17 @@ class _HomePageState extends State<HomePage> {
                             ),
                             const SizedBox(height: 14),
                             PrimaryButton(
-                              label: 'Mulai petualangan',
-                              onPressed: start,
+                              label: isStarting
+                                  ? 'Menyiapkan soal...'
+                                  : 'Mulai petualangan',
+                              onPressed: isStarting ? null : start,
                             ),
                           ],
                         ),
                       ),
                       const SizedBox(height: 14),
                       Text(
-                        'Gratis, tanpa pendaftaran. Jawabanmu tetap ada saat kamu berganti halaman.',
+                        'Bank 50 soal. Nama yang sama mendapat soal baru hingga satu siklus selesai.',
                         style: theme.textTheme.bodyMedium,
                       ),
                     ],

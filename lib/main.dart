@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'core/app_theme.dart';
 import 'features/home/home_page.dart';
+import 'features/quiz/quiz_session_factory.dart';
 
 void main() => runApp(const YokaiApp());
 
 class YokaiApp extends StatefulWidget {
-  const YokaiApp({super.key});
+  const YokaiApp({super.key, this.sessionFactory});
+  final QuizSessionFactory? sessionFactory;
   @override
   State<YokaiApp> createState() => _YokaiAppState();
 }
@@ -22,6 +24,7 @@ class _YokaiAppState extends State<YokaiApp> {
     darkTheme: AppTheme.dark,
     themeMode: mode,
     home: HomePage(
+      sessionFactory: widget.sessionFactory,
       onToggleTheme: () => setState(() {
         final currentDark =
             mode == ThemeMode.dark ||

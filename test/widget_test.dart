@@ -1,6 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:uts_pm5/main.dart';
+import 'package:uts_pm5/features/quiz/question_history.dart';
+import 'package:uts_pm5/features/quiz/quiz_session_factory.dart';
+import 'package:uts_pm5/widgets/answer_tile.dart';
+
+class _MemoryHistoryStore implements QuestionHistoryStore {
+  QuestionHistory? saved;
+
+  @override
+  Future<QuestionHistory> read(String playerName) async =>
+      saved ?? const QuestionHistory(usedIds: {}, lastSessionIds: {});
+
+  @override
+  Future<void> write(String playerName, QuestionHistory history) async {
+    saved = history;
+  }
+}
 
 void main() {
   testWidgets('nama wajib diisi sebelum mulai', (tester) async {
@@ -29,13 +45,18 @@ void main() {
   ) async {
     tester.view.physicalSize = const Size(390, 844);
     tester.view.devicePixelRatio = 1;
-    await tester.pumpWidget(const YokaiApp());
+    await tester.pumpWidget(
+      YokaiApp(
+        sessionFactory: QuizSessionFactory(historyStore: _MemoryHistoryStore()),
+      ),
+    );
     await tester.ensureVisible(find.byType(TextFormField));
     await tester.enterText(find.byType(TextFormField), 'Tariq');
     await tester.ensureVisible(find.text('Mulai petualangan'));
     await tester.tap(find.text('Mulai petualangan'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Yōkai'));
+    await tester.ensureVisible(find.byType(AnswerTile).first);
+    await tester.tap(find.byType(AnswerTile).first);
     await tester.pump();
     tester.view.physicalSize = const Size(900, 600);
     await tester.pumpAndSettle();

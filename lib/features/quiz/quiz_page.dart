@@ -5,7 +5,6 @@ import '../../core/app_theme.dart';
 import '../../widgets/answer_tile.dart';
 import '../../widgets/brand_header.dart';
 import '../../widgets/primary_button.dart';
-import 'question.dart';
 import 'quiz_session.dart';
 
 class QuizPage extends StatelessWidget {
@@ -21,7 +20,7 @@ class QuizPage extends StatelessWidget {
     return AnimatedBuilder(
       animation: session,
       builder: (context, _) {
-        final current = questions[session.index];
+        final current = session.questions[session.index];
         return Scaffold(
           body: SafeArea(
             child: Center(
@@ -51,7 +50,7 @@ class QuizPage extends StatelessWidget {
                               ),
                               const Spacer(),
                               Text(
-                                '${session.index + 1} / ${questions.length}',
+                                '${session.index + 1} / ${session.questions.length}',
                                 style: theme.textTheme.titleLarge?.copyWith(
                                   color: AppTheme.coral,
                                 ),
@@ -81,13 +80,14 @@ class QuizPage extends StatelessWidget {
                             ),
                           const SizedBox(height: 18),
                           PrimaryButton(
-                            label: session.index == questions.length - 1
+                            label: session.index == session.questions.length - 1
                                 ? 'Lihat hasil'
                                 : 'Pertanyaan berikutnya',
                             onPressed: session.selected == null
                                 ? null
                                 : () {
-                                    if (session.index == questions.length - 1) {
+                                    if (session.index ==
+                                        session.questions.length - 1) {
                                       onFinish();
                                     } else {
                                       session.goTo(session.index + 1);
@@ -184,12 +184,12 @@ class _QuizProgress extends StatelessWidget {
           Text('Jejak petualanganmu', style: theme.textTheme.titleLarge),
           const SizedBox(height: 6),
           Text(
-            '${session.answered} dari ${questions.length} soal sudah dijawab',
+            '${session.answered} dari ${session.questions.length} soal sudah dijawab',
             style: theme.textTheme.bodyMedium,
           ),
           const SizedBox(height: 18),
           LinearProgressIndicator(
-            value: session.answered / questions.length,
+            value: session.answered / session.questions.length,
             minHeight: 8,
             borderRadius: BorderRadius.circular(10),
             color: AppTheme.coral,
@@ -200,7 +200,7 @@ class _QuizProgress extends StatelessWidget {
             spacing: 7,
             runSpacing: 7,
             children: [
-              for (var i = 0; i < questions.length; i++)
+              for (var i = 0; i < session.questions.length; i++)
                 Container(
                   width: 30,
                   height: 30,

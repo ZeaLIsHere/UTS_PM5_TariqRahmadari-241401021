@@ -13,7 +13,7 @@ class QuizQuestion {
   final String explanation;
 }
 
-const questions = <QuizQuestion>[
+const defaultQuestions = <QuizQuestion>[
   QuizQuestion(
     'q01',
     'Apa sebutan makhluk supernatural dalam cerita rakyat Jepang?',
@@ -89,7 +89,7 @@ const questions = <QuizQuestion>[
 // Selama transisi, layar kuis memakai sepuluh soal awal; seluruh bank
 // digunakan oleh pemilih sesi pada fitur berikutnya.
 const questionBank = <QuizQuestion>[
-  ...questions,
+  ...defaultQuestions,
   QuizQuestion(
     'q11',
     'Di kota mana Kuil Fushimi Inari Taisha berada?',

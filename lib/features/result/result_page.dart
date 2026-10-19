@@ -17,7 +17,7 @@ class ResultPage extends StatelessWidget {
     final width = MediaQuery.sizeOf(context).width;
     final gutter = (width * .055).clamp(20.0, 52.0);
     final score = session.score;
-    final percentage = (score / questions.length * 100).round();
+    final percentage = (score / session.questions.length * 100).round();
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -56,7 +56,7 @@ class ResultPage extends StatelessWidget {
                           percentage >= 80
                               ? 'Luar biasa! Kamu ahli mitos Jepang.'
                               : percentage >= 50
-                              ? 'Bagus! Terus jelajahi dunia yōkai.'
+                              ? 'Bagus! Terus jelajahi dunia yÅkai.'
                               : 'Setiap legenda punya cerita baru untuk dipelajari.',
                           style: theme.textTheme.bodyLarge,
                         ),
@@ -67,7 +67,7 @@ class ResultPage extends StatelessWidget {
                           runSpacing: 2,
                           children: [
                             Text(
-                              '$score / ${questions.length}',
+                              '$score / ${session.questions.length}',
                               style: theme.textTheme.displayLarge?.copyWith(
                                 color: AppTheme.coral,
                               ),
@@ -106,10 +106,10 @@ class ResultPage extends StatelessWidget {
                         style: theme.textTheme.bodyLarge,
                       ),
                       const SizedBox(height: 22),
-                      for (var i = 0; i < questions.length; i++)
+                      for (var i = 0; i < session.questions.length; i++)
                         _ReviewCard(
                           number: i + 1,
-                          question: questions[i],
+                          question: session.questions[i],
                           answer: session.answers[i],
                         ),
                     ],
@@ -179,7 +179,7 @@ class _ReviewCard extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  'Soal $number  •  ${correct ? 'Benar' : 'Belum tepat'}',
+                  'Soal $number  â€¢  ${correct ? 'Benar' : 'Belum tepat'}',
                   style: theme.textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w800,
                   ),

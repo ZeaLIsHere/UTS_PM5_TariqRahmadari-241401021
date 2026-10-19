@@ -3,8 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'question.dart';
 
 class QuizSession extends ChangeNotifier {
-  QuizSession(this.name) : answers = List<int?>.filled(questions.length, null);
+  QuizSession(this.name, {List<QuizQuestion>? questions})
+    : questions = List.unmodifiable(questions ?? defaultQuestions),
+      answers = List<int?>.filled((questions ?? defaultQuestions).length, null);
   final String name;
+  final List<QuizQuestion> questions;
   final List<int?> answers;
   int index = 0;
 
