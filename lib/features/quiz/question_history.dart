@@ -34,11 +34,24 @@ class LocalQuestionHistoryStore implements QuestionHistoryStore {
     if (saved == null) {
       return const QuestionHistory(usedIds: {}, lastSessionIds: {});
     }
-    final data = jsonDecode(saved) as Map<String, dynamic>;
-    return QuestionHistory(
-      usedIds: (data['used'] as List<dynamic>).cast<String>().toSet(),
-      lastSessionIds: (data['last'] as List<dynamic>).cast<String>().toSet(),
-    );
+    try {
+      final data = jsonDecode(saved);
+      if (data is! Map<String, dynamic>) {
+        return const QuestionHistory(usedIds: {}, lastSessionIds: {});
+      }
+      return QuestionHistory(
+        usedIds: _idsFrom(data['used']),
+        lastSessionIds: _idsFrom(data['last']),
+      );
+    } on FormatException {
+      // Data lama atau rusak tidak boleh menghalangi pemain memulai kuis.
+      return const QuestionHistory(usedIds: {}, lastSessionIds: {});
+    }
+  }
+
+  Set<String> _idsFrom(Object? value) {
+    if (value is! List) return {};
+    return value.whereType<String>().toSet();
   }
 
   @override

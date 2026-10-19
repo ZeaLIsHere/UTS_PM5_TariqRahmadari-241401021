@@ -18,6 +18,16 @@ class _MemoryHistoryStore implements QuestionHistoryStore {
   }
 }
 
+class _BrokenHistoryStore implements QuestionHistoryStore {
+  @override
+  Future<QuestionHistory> read(String playerName) async =>
+      throw StateError('penyimpanan tidak tersedia');
+
+  @override
+  Future<void> write(String playerName, QuestionHistory history) async =>
+      throw StateError('penyimpanan tidak tersedia');
+}
+
 void main() {
   testWidgets('nama wajib diisi sebelum mulai', (tester) async {
     await tester.pumpWidget(const YokaiApp());
@@ -38,6 +48,24 @@ void main() {
         .widget<MaterialApp>(find.byType(MaterialApp))
         .themeMode;
     expect(after, isNot(before));
+  });
+
+  testWidgets('kuis tetap terbuka saat riwayat soal tidak tersedia', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      YokaiApp(
+        sessionFactory: QuizSessionFactory(historyStore: _BrokenHistoryStore()),
+      ),
+    );
+    await tester.ensureVisible(find.byType(TextFormField));
+    await tester.enterText(find.byType(TextFormField), 'Tariq');
+    await tester.ensureVisible(find.text('Mulai petualangan'));
+    await tester.tap(find.text('Mulai petualangan'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('PERTANYAAN 1'), findsOneWidget);
+    expect(find.text('1 / 10'), findsOneWidget);
   });
 
   testWidgets('jawaban tetap terpilih setelah ukuran layar berubah', (

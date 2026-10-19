@@ -41,9 +41,7 @@ class _HomePageState extends State<HomePage> {
     } catch (_) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Riwayat soal gagal disimpan. Coba lagi.'),
-        ),
+        const SnackBar(content: Text('Soal gagal disiapkan. Coba lagi.')),
       );
       setState(() => isStarting = false);
       return;

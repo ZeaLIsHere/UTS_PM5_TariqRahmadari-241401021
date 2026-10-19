@@ -34,6 +34,11 @@ QuestionSelection pickQuestions({
     candidates = bank
         .where((question) => !lastSessionIds.contains(question.id))
         .toList();
+    if (candidates.length < count) {
+      // Riwayat bisa saja tidak lengkap; jangan sampai sesi berisi kurang
+      // dari jumlah soal yang diminta.
+      candidates = [...bank];
+    }
   }
   candidates.shuffle(random);
   final selected = List<QuizQuestion>.unmodifiable(candidates.take(count));

@@ -46,4 +46,22 @@ void main() {
       isEmpty,
     );
   });
+
+  test('riwayat tidak lengkap tetap menghasilkan sesi penuh', () {
+    final allIds = questionBank.map((question) => question.id).toSet();
+    final selection = pickQuestions(
+      bank: questionBank,
+      usedIds: allIds,
+      lastSessionIds: allIds,
+      count: 10,
+      random: Random(11),
+    );
+
+    expect(selection.restartedCycle, isTrue);
+    expect(selection.questions, hasLength(10));
+    expect(
+      selection.questions.map((question) => question.id).toSet(),
+      hasLength(10),
+    );
+  });
 }
