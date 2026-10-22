@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../core/app_layout.dart';
 import '../core/app_motion.dart';
 
 class AnswerTile extends StatelessWidget {
@@ -18,21 +19,27 @@ class AnswerTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final radius = AppLayout.sp(context, 18, min: 16, max: 22);
+    final avatarRadius = AppLayout.sp(context, 19, min: 17, max: 23);
     return Semantics(
       selected: selected,
       button: true,
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 12),
+        padding: EdgeInsets.only(
+          bottom: AppLayout.sp(context, 12, min: 9, max: 16),
+        ),
         child: Material(
           color: scheme.surface,
-          borderRadius: BorderRadius.circular(18),
+          borderRadius: BorderRadius.circular(radius),
           child: InkWell(
             onTap: onTap,
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: BorderRadius.circular(radius),
             child: AnimatedContainer(
               duration: AppMotion.duration(context),
               curve: Curves.easeOutCubic,
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(
+                AppLayout.sp(context, 16, min: 13, max: 21),
+              ),
               decoration: BoxDecoration(
                 color: selected
                     ? scheme.primary.withValues(alpha: .10)
@@ -40,12 +47,12 @@ class AnswerTile extends StatelessWidget {
                 border: Border.all(
                   color: selected ? scheme.primary : scheme.outlineVariant,
                 ),
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: BorderRadius.circular(radius),
               ),
               child: Row(
                 children: [
                   CircleAvatar(
-                    radius: 19,
+                    radius: avatarRadius,
                     backgroundColor: selected
                         ? scheme.primary
                         : scheme.surfaceContainerHighest,
@@ -57,19 +64,28 @@ class AnswerTile extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 16),
+                  SizedBox(
+                    width: AppLayout.sp(context, 16, min: 12, max: 22),
+                  ),
                   Expanded(
                     child: Text(
                       text,
-                      style: const TextStyle(
-                        fontSize: 16,
+                      style: TextStyle(
+                        fontSize: AppLayout.sp(
+                          context,
+                          16,
+                          min: 15,
+                          max: 19,
+                        ),
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8),
                   SizedBox(
-                    width: 24,
+                    width: AppLayout.sp(context, 8, min: 6, max: 11),
+                  ),
+                  SizedBox(
+                    width: AppLayout.sp(context, 24, min: 22, max: 28),
                     child: AnimatedOpacity(
                       opacity: selected ? 1 : 0,
                       duration: AppMotion.duration(context),
@@ -77,8 +93,16 @@ class AnswerTile extends StatelessWidget {
                           ? Icon(
                               Icons.check_circle_rounded,
                               color: scheme.primary,
+                              size: AppLayout.sp(context, 24, min: 22, max: 28),
                             )
-                          : const SizedBox(height: 24),
+                          : SizedBox(
+                              height: AppLayout.sp(
+                                context,
+                                24,
+                                min: 22,
+                                max: 28,
+                              ),
+                            ),
                     ),
                   ),
                 ],

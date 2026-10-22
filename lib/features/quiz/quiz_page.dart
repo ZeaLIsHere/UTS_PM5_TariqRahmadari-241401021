@@ -30,7 +30,12 @@ class QuizPage extends StatelessWidget {
                   maxWidth: AppLayout.contentWidth(context),
                 ),
                 child: SingleChildScrollView(
-                  padding: EdgeInsets.fromLTRB(gutter, 24, gutter, 40),
+                  padding: EdgeInsets.fromLTRB(
+                    gutter,
+                    AppLayout.gap(context, 2.8, min: 14, max: 32),
+                    gutter,
+                    AppLayout.gap(context, 4.6, min: 24, max: 48),
+                  ),
                   child: LayoutBuilder(
                     builder: (context, box) {
                       final wide = AppLayout.useColumns(box);
@@ -43,8 +48,8 @@ class QuizPage extends StatelessWidget {
                         children: [
                           Wrap(
                             alignment: WrapAlignment.spaceBetween,
-                            spacing: 16,
-                            runSpacing: 8,
+                            spacing: AppLayout.sp(context, 16, min: 10, max: 22),
+                            runSpacing: AppLayout.sp(context, 8, min: 6, max: 12),
                             children: [
                               Text(
                                 'PERTANYAAN ${session.index + 1}',
@@ -62,20 +67,46 @@ class QuizPage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(
+                            height: AppLayout.gap(
+                              context,
+                              1.9,
+                              min: 10,
+                              max: 20,
+                            ),
+                          ),
                           Text(
                             current.prompt,
                             style: theme.textTheme.headlineMedium?.copyWith(
-                              fontSize: wide ? 34 : 26,
+                              fontSize: AppLayout.sp(
+                                context,
+                                wide ? 34 : 26,
+                                min: 23,
+                                max: wide ? 38 : 32,
+                              ),
                               height: 1.2,
                             ),
                           ),
-                          const SizedBox(height: 10),
+                          SizedBox(
+                            height: AppLayout.gap(
+                              context,
+                              1.2,
+                              min: 8,
+                              max: 14,
+                            ),
+                          ),
                           Text(
                             'Pilih satu jawaban yang paling tepat.',
                             style: theme.textTheme.bodyLarge,
                           ),
-                          const SizedBox(height: 30),
+                          SizedBox(
+                            height: AppLayout.gap(
+                              context,
+                              3.6,
+                              min: 22,
+                              max: 40,
+                            ),
+                          ),
                           for (var i = 0; i < current.options.length; i++)
                             AnswerTile(
                               label: String.fromCharCode(65 + i),
@@ -83,7 +114,14 @@ class QuizPage extends StatelessWidget {
                               selected: session.selected == i,
                               onTap: () => session.select(i),
                             ),
-                          const SizedBox(height: 18),
+                          SizedBox(
+                            height: AppLayout.gap(
+                              context,
+                              2.1,
+                              min: 12,
+                              max: 22,
+                            ),
+                          ),
                           PrimaryButton(
                             label: session.index == session.questions.length - 1
                                 ? (session.answered == session.questions.length
@@ -130,11 +168,25 @@ class QuizPage extends StatelessWidget {
                                 onPressed: () => Navigator.pop(context),
                                 icon: const Icon(Icons.arrow_back_rounded),
                               ),
-                              const SizedBox(width: 8),
+                              SizedBox(
+                                width: AppLayout.sp(
+                                  context,
+                                  8,
+                                  min: 6,
+                                  max: 12,
+                                ),
+                              ),
                               Expanded(child: BrandHeader()),
                             ],
                           ),
-                          SizedBox(height: wide ? 52 : 24),
+                          SizedBox(
+                            height: AppLayout.gap(
+                              context,
+                              wide ? 6.2 : 2.8,
+                              min: 18,
+                              max: 58,
+                            ),
+                          ),
                           if (wide)
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -143,13 +195,27 @@ class QuizPage extends StatelessWidget {
                                   width: box.maxWidth * .31,
                                   child: progress,
                                 ),
-                                const SizedBox(width: 42),
+                                SizedBox(
+                                  width: AppLayout.vw(
+                                    context,
+                                    4.4,
+                                    min: 26,
+                                    max: 54,
+                                  ),
+                                ),
                                 Expanded(child: questionArea),
                               ],
                             )
                           else ...[
                             progress,
-                            const SizedBox(height: 32),
+                            SizedBox(
+                              height: AppLayout.gap(
+                                context,
+                                3.8,
+                                min: 20,
+                                max: 42,
+                              ),
+                            ),
                             questionArea,
                           ],
                         ],
@@ -175,12 +241,16 @@ class _QuizProgress extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Container(
-      padding: EdgeInsets.all(showArt ? 26 : 18),
+      padding: EdgeInsets.all(
+        AppLayout.sp(context, showArt ? 26 : 18, min: 15, max: 32),
+      ),
       decoration: BoxDecoration(
         color: theme.brightness == Brightness.dark
             ? AppTheme.darkSurface
             : AppTheme.blush,
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(
+          AppLayout.sp(context, 24, min: 20, max: 30),
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,27 +259,60 @@ class _QuizProgress extends StatelessWidget {
             Center(
               child: SvgPicture.asset(
                 'assets/svg/quiz_scroll.svg',
-                height: 190,
+                height: AppLayout.gap(
+                  context,
+                  20,
+                  min: 140,
+                  max: 220,
+                ),
                 semanticsLabel: 'Ilustrasi gulungan kuis',
               ),
             ),
-            const SizedBox(height: 22),
+            SizedBox(
+              height: AppLayout.gap(
+                context,
+                2.6,
+                min: 14,
+                max: 28,
+              ),
+            ),
           ],
           Text('Jejak petualanganmu', style: theme.textTheme.titleLarge),
-          const SizedBox(height: 6),
+          SizedBox(
+            height: AppLayout.gap(
+              context,
+              .7,
+              min: 5,
+              max: 9,
+            ),
+          ),
           Text(
             '${session.answered} dari ${session.questions.length} soal sudah dijawab',
             style: theme.textTheme.bodyMedium,
           ),
-          const SizedBox(height: 18),
+          SizedBox(
+            height: AppLayout.gap(
+              context,
+              2.1,
+              min: 12,
+              max: 22,
+            ),
+          ),
           AnimatedProgress(
             value: session.answered / session.questions.length,
             label: 'Progres jawaban',
           ),
-          const SizedBox(height: 18),
+          SizedBox(
+            height: AppLayout.gap(
+              context,
+              2.1,
+              min: 12,
+              max: 22,
+            ),
+          ),
           Wrap(
-            spacing: 7,
-            runSpacing: 7,
+            spacing: AppLayout.sp(context, 7, min: 5, max: 10),
+            runSpacing: AppLayout.sp(context, 7, min: 5, max: 10),
             children: [
               for (var i = 0; i < session.questions.length; i++)
                 Semantics(
@@ -217,8 +320,18 @@ class _QuizProgress extends StatelessWidget {
                   label:
                       'Soal ${i + 1}, ${session.answers[i] == null ? 'belum dijawab' : 'sudah dijawab'}',
                   child: SizedBox(
-                    width: 48,
-                    height: 48,
+                    width: AppLayout.sp(
+                      context,
+                      48,
+                      min: 44,
+                      max: 58,
+                    ),
+                    height: AppLayout.sp(
+                      context,
+                      48,
+                      min: 44,
+                      max: 58,
+                    ),
                     child: OutlinedButton(
                       onPressed: () => session.goTo(i),
                       style: OutlinedButton.styleFrom(

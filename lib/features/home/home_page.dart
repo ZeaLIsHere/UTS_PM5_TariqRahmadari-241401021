@@ -69,7 +69,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final width = MediaQuery.sizeOf(context).width;
     final gutter = AppLayout.gutter(context);
     return Scaffold(
       body: SafeArea(
@@ -79,31 +78,58 @@ class _HomePageState extends State<HomePage> {
               maxWidth: AppLayout.contentWidth(context),
             ),
             child: SingleChildScrollView(
-              padding: EdgeInsets.fromLTRB(gutter, 24, gutter, 36),
+              padding: EdgeInsets.fromLTRB(
+                gutter,
+                AppLayout.gap(context, 2.8, min: 14, max: 32),
+                gutter,
+                AppLayout.gap(context, 4.2, min: 22, max: 44),
+              ),
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   final wide = AppLayout.useColumns(constraints);
+                  final heroFontSize = wide
+                      ? AppLayout.vw(context, 4, min: 34, max: 56)
+                      : AppLayout.vw(context, 9.5, min: 30, max: 44);
                   final copy = Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Mitos Jepang, seberapa kenal kamu?',
                         style: theme.textTheme.displayLarge?.copyWith(
-                          fontSize: wide
-                              ? 52
-                              : (width * .095).clamp(32.0, 44.0),
-                          letterSpacing: -1,
+                          fontSize: heroFontSize,
+                          letterSpacing: AppLayout.sp(context, -1),
                         ),
                       ),
-                      const SizedBox(height: 18),
+                      SizedBox(
+                        height: AppLayout.gap(
+                          context,
+                          2.1,
+                          min: 12,
+                          max: 22,
+                        ),
+                      ),
                       ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 530),
+                        constraints: BoxConstraints(
+                          maxWidth: AppLayout.vw(
+                            context,
+                            58,
+                            min: 320,
+                            max: 560,
+                          ),
+                        ),
                         child: Text(
                           'Dari rubah yang bisa berubah wujud hingga roh penghuni hutan. Ikuti perjalanan singkat dan temukan seberapa jauh kamu mengenal dunia yōkai.',
                           style: theme.textTheme.bodyLarge,
                         ),
                       ),
-                      const SizedBox(height: 32),
+                      SizedBox(
+                        height: AppLayout.gap(
+                          context,
+                          3.8,
+                          min: 22,
+                          max: 42,
+                        ),
+                      ),
                       Form(
                         key: form,
                         child: Column(
@@ -113,24 +139,60 @@ class _HomePageState extends State<HomePage> {
                               'Siapa namamu?',
                               style: theme.textTheme.titleLarge,
                             ),
-                            const SizedBox(height: 10),
+                            SizedBox(
+                              height: AppLayout.gap(
+                                context,
+                                1.2,
+                                min: 8,
+                                max: 14,
+                              ),
+                            ),
                             TextFormField(
                               controller: name,
                               enabled: !isStarting,
                               autofillHints: const [AutofillHints.nickname],
                               textInputAction: TextInputAction.done,
                               onFieldSubmitted: (_) => start(),
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
                                 labelText: 'Nama pemain',
                                 hintText: 'Tulis namamu di sini',
-                                prefixIcon: Icon(Icons.person_outline_rounded),
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: AppLayout.sp(
+                                    context,
+                                    20,
+                                    min: 16,
+                                    max: 26,
+                                  ),
+                                  vertical: AppLayout.gap(
+                                    context,
+                                    2.2,
+                                    min: 14,
+                                    max: 22,
+                                  ),
+                                ),
+                                prefixIcon: Icon(
+                                  Icons.person_outline_rounded,
+                                  size: AppLayout.sp(
+                                    context,
+                                    22,
+                                    min: 20,
+                                    max: 27,
+                                  ),
+                                ),
                               ),
                               validator: (value) =>
                                   value == null || value.trim().isEmpty
                                   ? 'Nama wajib diisi'
                                   : null,
                             ),
-                            const SizedBox(height: 14),
+                            SizedBox(
+                              height: AppLayout.gap(
+                                context,
+                                1.7,
+                                min: 11,
+                                max: 19,
+                              ),
+                            ),
                             PrimaryButton(
                               isLoading: isStarting,
                               label: isStarting
@@ -144,7 +206,14 @@ class _HomePageState extends State<HomePage> {
                     ],
                   );
                   final artwork = ConstrainedBox(
-                    constraints: BoxConstraints(maxHeight: wide ? 480 : 280),
+                    constraints: BoxConstraints(
+                      maxHeight: AppLayout.vh(
+                        context,
+                        wide ? 50 : 30,
+                        min: wide ? 280 : 170,
+                        max: wide ? 480 : 300,
+                      ),
+                    ),
                     child: Semantics(
                       label: 'Ilustrasi kuil Jepang bersama maskot kitsune',
                       child: SvgPicture.asset(
@@ -168,30 +237,79 @@ class _HomePageState extends State<HomePage> {
                                 )
                               : SvgPicture.asset(
                                   'assets/svg/icon_moon.svg',
-                                  width: 28,
-                                  height: 28,
+                                  width: AppLayout.sp(
+                                    context,
+                                    28,
+                                    min: 24,
+                                    max: 32,
+                                  ),
+                                  height: AppLayout.sp(
+                                    context,
+                                    28,
+                                    min: 24,
+                                    max: 32,
+                                  ),
                                   excludeFromSemantics: true,
                                 ),
                         ),
                       ),
-                      SizedBox(height: wide ? 48 : 32),
+                      SizedBox(
+                        height: AppLayout.gap(
+                          context,
+                          wide ? 5.6 : 3.8,
+                          min: 22,
+                          max: 56,
+                        ),
+                      ),
                       if (wide)
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Expanded(flex: 11, child: copy),
-                            const SizedBox(width: 46),
+                            SizedBox(
+                              width: AppLayout.vw(
+                                context,
+                                4.8,
+                                min: 28,
+                                max: 56,
+                              ),
+                            ),
                             Expanded(flex: 10, child: artwork),
                           ],
                         )
                       else
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [copy, const SizedBox(height: 32), artwork],
+                          children: [
+                            copy,
+                            SizedBox(
+                              height: AppLayout.gap(
+                                context,
+                                3.8,
+                                min: 20,
+                                max: 42,
+                              ),
+                            ),
+                            artwork,
+                          ],
                         ),
-                      const SizedBox(height: 52),
+                      SizedBox(
+                        height: AppLayout.gap(
+                          context,
+                          6,
+                          min: 34,
+                          max: 62,
+                        ),
+                      ),
                       Divider(color: theme.dividerColor),
-                      const SizedBox(height: 14),
+                      SizedBox(
+                        height: AppLayout.gap(
+                          context,
+                          1.6,
+                          min: 10,
+                          max: 18,
+                        ),
+                      ),
                       Text(
                         'Yōkai Quest  •  Jelajahi kisah, pilih jawaban, temukan ceritanya.',
                         style: theme.textTheme.bodyMedium,
