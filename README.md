@@ -68,3 +68,21 @@ flutter build web
 | `assets/svg/` | Ilustrasi dan ikon |
 
 Font Manrope menggunakan lisensi OFL yang tersedia di `assets/fonts/OFL.txt`.
+
+
+SS Aplikasi
+<img width="357" height="795" alt="image" src="https://github.com/user-attachments/assets/bc33f6b4-847a-4266-be01-9684126a16a4" />
+
+<img width="359" height="797" alt="image" src="https://github.com/user-attachments/assets/4381279b-10e6-4500-a7e6-59abd8ece33f" />
+
+<img width="358" height="800" alt="image" src="https://github.com/user-attachments/assets/8802d179-09cd-4857-8b2d-bacd73216ffe" />
+
+<img width="354" height="798" alt="image" src="https://github.com/user-attachments/assets/4ec5117b-112e-4b1f-b3cb-225ac12668f1" />
+
+<img width="370" height="857" alt="image" src="https://github.com/user-attachments/assets/06e619ed-d9dc-4aa0-a9a9-6a622a11c378" />
+
+<img width="373" height="834" alt="image" src="https://github.com/user-attachments/assets/c914183e-4726-4815-9cb0-a1d5faece896" />
+
+
+
+Link Video Presentasi dan Prototipe : https://drive.google.com/file/d/1lx6gOh5cujOM88paBhn_qANdjygNmXzz/view?usp=sharing
